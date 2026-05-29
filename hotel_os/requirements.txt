@@ -1,0 +1,21 @@
+# ============================================================
+# HotelOS — Python Dependencies
+# Install: pip install -r requirements.txt
+# Python version: 3.11+
+# ============================================================
+
+# --- Web Framework ---
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+
+# --- Redis (async) ---
+redis==5.0.4
+
+# --- HTTP Client (room service → reception charge notification) ---
+httpx==0.27.0
+
+# --- Data Validation ---
+pydantic==2.7.1
+
+# --- Static Files ---
+aiofiles==23.2.1

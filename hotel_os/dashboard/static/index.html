@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotelOS — Operations Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- ====================================================
+     LOGIN SCREEN
+     ==================================================== -->
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+        <div class="login-logo">
+            <span class="logo-box">H</span>otelOS
+        </div>
+        <h2 class="login-title">Operations Dashboard</h2>
+        <p class="login-subtitle">Sign in to access the control panel</p>
+
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <i class="fas fa-user form-icon"></i>
+                <input type="text" id="loginUsername" placeholder="Username" value="admin" required>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-lock form-icon"></i>
+                <input type="password" id="loginPassword" placeholder="Password" value="admin123" required>
+            </div>
+            <div class="login-error" id="loginError"></div>
+            <button type="submit" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <span><i class="fas fa-shield-alt"></i> Secured access</span>
+            <span><i class="fas fa-circle ws-dot" id="loginWsDot"></i> Live system</span>
+        </div>
+    </div>
+</div>
+
+<!-- ====================================================
+     MAIN DASHBOARD
+     ==================================================== -->
+<div class="dashboard" id="dashboard" style="display:none">
+
+    <!-- ── NAVBAR ── -->
+    <nav class="dash-nav">
+        <div class="nav-left">
+            <a class="nav-logo">
+                <span class="logo-box">H</span>otelOS
+            </a>
+            <span class="nav-tag">Operations Dashboard</span>
+        </div>
+        <div class="nav-center">
+            <button class="nav-tab active" data-tab="overview">
+                <i class="fas fa-th-large"></i> Overview
+            </button>
+            <button class="nav-tab" data-tab="rooms">
+                <i class="fas fa-bed"></i> Rooms
+            </button>
+            <button class="nav-tab" data-tab="orders">
+                <i class="fas fa-utensils"></i> Room Service
+            </button>
+            <button class="nav-tab" data-tab="maintenance">
+                <i class="fas fa-tools"></i> Maintenance
+            </button>
+            <button class="nav-tab" data-tab="housekeeping">
+                <i class="fas fa-broom"></i> Housekeeping
+            </button>
+        </div>
+        <div class="nav-right">
+            <div class="ws-status" id="wsStatus">
+                <i class="fas fa-circle" id="wsDot"></i>
+                <span id="wsLabel">Connecting...</span>
+            </div>
+            <button class="nav-btn-logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>
+        </div>
+    </nav>
+
+    <!-- ── TOAST NOTIFICATIONS ── -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ====================================================
+         TAB: OVERVIEW
+         ==================================================== -->
+    <div class="tab-content active" id="tab-overview">
+        <!-- Stats Row -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-door-open"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="statClean">0</span>
+                    <span class="stat-label">Clean Rooms</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-user-check"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="statOccupied">0</span>
+                    <span class="stat-label">Occupied</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon yellow"><i class="fas fa-broom"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="statDirty">0</span>
+                    <span class="stat-label">Needs Cleaning</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon red"><i class="fas fa-tools"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="statMaint">0</span>
+                    <span class="stat-label">Maintenance</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-utensils"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="statOrders">0</span>
+                    <span class="stat-label">Active Orders</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overview Grid -->
+        <div class="overview-grid">
+            <!-- Room Map -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-map"></i> Room Map</h3>
+                    <span class="card-badge" id="roomMapBadge">10 rooms</span>
+                </div>
+                <div class="room-map" id="roomMap"></div>
+                <div class="room-legend">
+                    <span><i class="fas fa-circle legend-clean"></i> Clean</span>
+                    <span><i class="fas fa-circle legend-occupied"></i> Occupied</span>
+                    <span><i class="fas fa-circle legend-dirty"></i> Dirty</span>
+                    <span><i class="fas fa-circle legend-cleaning"></i> Cleaning</span>
+                </div>
+            </div>
+
+            <!-- Live Activity Feed -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bolt"></i> Live Activity</h3>
+                    <button class="card-btn" id="clearFeedBtn">Clear</button>
+                </div>
+                <div class="activity-feed" id="activityFeed">
+                    <div class="feed-empty">
+                        <i class="fas fa-satellite-dish"></i>
+                        <p>Waiting for events...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         TAB: ROOMS
+         ==================================================== -->
+    <div class="tab-content" id="tab-rooms">
+        <div class="page-header">
+            <h2><i class="fas fa-bed"></i> Room Management</h2>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="checkInBtn">
+                    <i class="fas fa-user-plus"></i> Check In
+                </button>
+                <button class="btn btn-outline" id="checkOutBtn">
+                    <i class="fas fa-user-minus"></i> Check Out
+                </button>
+            </div>
+        </div>
+        <div class="rooms-grid" id="roomsGrid"></div>
+    </div>
+
+    <!-- ====================================================
+         TAB: ROOM SERVICE
+         ==================================================== -->
+    <div class="tab-content" id="tab-orders">
+        <div class="page-header">
+            <h2><i class="fas fa-utensils"></i> Room Service Orders</h2>
+            <button class="btn btn-primary" id="newOrderBtn">
+                <i class="fas fa-plus"></i> New Order
+            </button>
+        </div>
+        <div class="orders-list" id="ordersList"></div>
+    </div>
+
+    <!-- ====================================================
+         TAB: MAINTENANCE
+         ==================================================== -->
+    <div class="tab-content" id="tab-maintenance">
+        <div class="page-header">
+            <h2><i class="fas fa-tools"></i> Maintenance</h2>
+            <button class="btn btn-primary" id="newRequestBtn">
+                <i class="fas fa-plus"></i> Report Issue
+            </button>
+        </div>
+        <div class="maintenance-list" id="maintenanceList"></div>
+    </div>
+
+    <!-- ====================================================
+         TAB: HOUSEKEEPING
+         ==================================================== -->
+    <div class="tab-content" id="tab-housekeeping">
+        <div class="page-header">
+            <h2><i class="fas fa-broom"></i> Housekeeping Queue</h2>
+        </div>
+        <div class="housekeeping-list" id="housekeepingList"></div>
+    </div>
+
+</div><!-- end .dashboard -->
+
+<!-- ====================================================
+     MODALS
+     ==================================================== -->
+
+<!-- Check In Modal -->
+<div class="modal-overlay" id="checkInModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-user-plus"></i> Guest Check In</h3>
+            <button class="modal-close" data-modal="checkInModal"><i class="fas fa-times"></i></button>
+        </div>
+        <form class="modal-form" id="checkInForm">
+            <div class="form-row">
+                <div class="form-group-modal">
+                    <label>Guest Name</label>
+                    <input type="text" id="ciName" placeholder="Full name" required>
+                </div>
+                <div class="form-group-modal">
+                    <label>Room Type</label>
+                    <select id="ciType">
+                        <option value="single">Single</option>
+                        <option value="double" selected>Double</option>
+                        <option value="suite">Suite</option>
+                        <option value="accessible">Accessible</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group-modal">
+                    <label>Number of Nights</label>
+                    <input type="number" id="ciNights" value="1" min="1" max="365">
+                </div>
+                <div class="form-group-modal">
+                    <label>Floor Preference</label>
+                    <select id="ciFloor">
+                        <option value="">No preference</option>
+                        <option value="1">Floor 1</option>
+                        <option value="2">Floor 2</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group-modal">
+                    <label>Proximity</label>
+                    <select id="ciProximity">
+                        <option value="">No preference</option>
+                        <option value="elevator">Near Elevator</option>
+                        <option value="stairs">Near Stairs</option>
+                    </select>
+                </div>
+                <div class="form-group-modal">
+                    <label>Discount %</label>
+                    <input type="number" id="ciDiscount" value="0" min="0" max="100">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+                <i class="fas fa-check"></i> Confirm Check In
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Check Out Modal -->
+<div class="modal-overlay" id="checkOutModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-user-minus"></i> Guest Check Out</h3>
+            <button class="modal-close" data-modal="checkOutModal"><i class="fas fa-times"></i></button>
+        </div>
+        <form class="modal-form" id="checkOutForm">
+            <div class="form-group-modal">
+                <label>Room Number</label>
+                <input type="number" id="coRoom" placeholder="e.g. 204" required>
+            </div>
+            <div class="form-group-modal">
+                <label>Late Checkout Fee ($)</label>
+                <input type="number" id="coLateFee" value="0" min="0" step="0.01">
+            </div>
+            <div class="form-group-modal checkbox-group">
+                <label>
+                    <input type="checkbox" id="coEarly"> Early checkout
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+                <i class="fas fa-receipt"></i> Process Checkout
+            </button>
+        </form>
+        <div class="bill-result" id="billResult" style="display:none"></div>
+    </div>
+</div>
+
+<!-- New Order Modal -->
+<div class="modal-overlay" id="newOrderModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-utensils"></i> New Room Service Order</h3>
+            <button class="modal-close" data-modal="newOrderModal"><i class="fas fa-times"></i></button>
+        </div>
+        <form class="modal-form" id="newOrderForm">
+            <div class="form-group-modal">
+                <label>Room Number</label>
+                <input type="number" id="orRoom" placeholder="e.g. 301" required>
+            </div>
+            <div id="orderItems">
+                <div class="order-item-row">
+                    <input type="text" placeholder="Item name" class="item-name" required>
+                    <input type="number" placeholder="Qty" class="item-qty" value="1" min="1">
+                    <input type="number" placeholder="Price $" class="item-price" step="0.01" min="0.01">
+                    <button type="button" class="remove-item-btn"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline btn-sm" id="addItemBtn">
+                <i class="fas fa-plus"></i> Add Item
+            </button>
+            <button type="submit" class="btn btn-primary btn-full" style="margin-top:16px">
+                <i class="fas fa-paper-plane"></i> Place Order
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- New Maintenance Modal -->
+<div class="modal-overlay" id="newRequestModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-tools"></i> Report Maintenance Issue</h3>
+            <button class="modal-close" data-modal="newRequestModal"><i class="fas fa-times"></i></button>
+        </div>
+        <form class="modal-form" id="newRequestForm">
+            <div class="form-row">
+                <div class="form-group-modal">
+                    <label>Room Number</label>
+                    <input type="number" id="mrRoom" placeholder="e.g. 115" required>
+                </div>
+                <div class="form-group-modal">
+                    <label>Urgency</label>
+                    <select id="mrUrgency">
+                        <option value="Critical">🔴 Critical</option>
+                        <option value="High">🟠 High</option>
+                        <option value="Normal" selected>🟡 Normal</option>
+                        <option value="Low">🟢 Low</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group-modal">
+                <label>Description</label>
+                <textarea id="mrDesc" placeholder="Describe the issue..." rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+                <i class="fas fa-exclamation-triangle"></i> Submit Request
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
