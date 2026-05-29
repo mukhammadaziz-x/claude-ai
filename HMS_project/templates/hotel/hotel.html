@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}HMS - Book Unique Experiences{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+
+<section class="hero" id="hero">
+    <div class="hero-content">
+        <h1>Book Unique Experiences</h1>
+        <p>Discover top rated hotels, shops and restaurants around the world</p>
+    </div>
+    <form class="search-bar" action="{% url 'hotel:index' %}" method="GET">
+        <div class="search-field">
+            <input type="text" name="q" placeholder="Hotel, City..." value="{{ request.GET.q }}">
+        </div>
+        <div class="search-field">
+            <input type="date" name="date" placeholder="Select Booking Date">
+        </div>
+        <div class="search-field">
+            <select name="category">
+                <option value="">All Categories</option>
+                <option value="hotel">Hotels</option>
+                <option value="apartment">Apartments</option>
+                <option value="resort">Resorts</option>
+                <option value="villa">Villas</option>
+            </select>
+        </div>
+        <button type="submit" class="search-btn">Search</button>
+    </form>
+</section>
+
+<section class="popular-tours" id="popularTours">
+    <div class="container">
+        <h2 class="section-title">Our Popular Tours</h2>
+        <p class="section-subtitle">Explore the greatest places in the city</p>
+
+        <div class="hotel-grid">
+
+            <div class="hotel-card">
+                <div class="hotel-card-img">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80"
+                        alt="Grand Hyat Hotel">
+                    <span class="hotel-badge">Open Now</span>
+                    <div class="hotel-card-info">
+                        <h3>Grand Hyat Hotel</h3>
+                        <div class="hotel-card-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> F06,CHINA HOME, International City,4th floor,
+                                Dubai</span>
+                            <span><i class="fas fa-phone"></i> 1234567890</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-card-bottom">
+                    <div class="hotel-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star empty"></i>
+                            <i class="fas fa-star empty"></i>
+                        </div>
+                        <span class="rating-badge">3.0/5 (1 review)</span>
+                    </div>
+                    <div class="hotel-card-actions">
+                        <span>0</span>
+                        <button class="heart-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hotel-card">
+                <div class="hotel-card-img">
+                    <img src="https://images.unsplash.com/photo-1590490360182-c33d955bc27d?w=600&q=80"
+                        alt="ABAR Hotel Apartment">
+                    <span class="hotel-badge">Open Now</span>
+                    <div class="hotel-card-info">
+                        <h3>ABAR HOTEL APARTMEN...</h3>
+                        <div class="hotel-card-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> 123 Main Street, Miami, USA</span>
+                            <span><i class="fas fa-phone"></i> 12345690</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-card-bottom">
+                    <div class="hotel-rating">
+                        <span class="rating-badge no-rating">No Rating Yet</span>
+                    </div>
+                    <div class="hotel-card-actions">
+                        <span>0</span>
+                        <button class="heart-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hotel-card">
+                <div class="hotel-card-img">
+                    <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80"
+                        alt="Kiki's Home">
+                    <span class="hotel-badge">Open Now</span>
+                    <div class="hotel-card-info">
+                        <h3>Kiki's Home and Apa...</h3>
+                        <div class="hotel-card-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> 123 Main Street, Miami, USA</span>
+                            <span><i class="fas fa-phone"></i> 1234567890</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-card-bottom">
+                    <div class="hotel-rating">
+                        <span class="rating-badge no-rating">No Rating Yet</span>
+                    </div>
+                    <div class="hotel-card-actions">
+                        <span>0</span>
+                        <button class="heart-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hotel-card">
+                <div class="hotel-card-img">
+                    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80"
+                        alt="Park Inn by Radisson">
+                    <span class="hotel-badge">Open Now</span>
+                    <div class="hotel-card-info">
+                        <h3>Park Inn by Radisso...</h3>
+                        <div class="hotel-card-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> 123 Main Street, Miami, USA</span>
+                            <span><i class="fas fa-phone"></i> 1234567890</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-card-bottom">
+                    <div class="hotel-rating">
+                        <span class="rating-badge no-rating">No Rating Yet</span>
+                    </div>
+                    <div class="hotel-card-actions">
+                        <span>0</span>
+                        <button class="heart-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hotel-card">
+                <div class="hotel-card-img">
+                    <img src="https://images.unsplash.com/ photo-1564501049412-61c2a3083791?w=600&q=80"
+                        alt="Black Signature Hotel">
+                    <span class="hotel-badge">Open Now</span>
+                    <div class="hotel-card-info">
+                        <h3>Black Signature Hot...</h3>
+                        <div class="hotel-card-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> 123 Main Street, Miami, USA</span>
+                            <span><i class="fas fa-phone"></i> 1234567890</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-card-bottom">
+                    <div class="hotel-rating">
+                        <span class="rating-badge no-rating">No Rating Yet</span>
+                    </div>
+                    <div class="hotel-card-actions">
+                        <span>0</span>
+                        <button class="heart-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

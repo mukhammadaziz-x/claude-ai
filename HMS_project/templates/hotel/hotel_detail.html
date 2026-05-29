@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ hotel.name|default:"Grand Hyat Hotel" }} - HMS{% endblock %}
+
+{% block content %}
+
+<!-- ====== IMAGE GALLERY ====== -->
+<div class="hotel-gallery" id="hotelGallery">
+    <div class="gallery-slider" id="gallerySlider">
+        <div class="gallery-slide">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80" alt="Hotel exterior">
+        </div>
+        <div class="gallery-slide">
+            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200&q=80" alt="Hotel room">
+        </div>
+        <div class="gallery-slide">
+            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80" alt="Hotel room 2">
+        </div>
+    </div>
+    <button class="gallery-nav prev" id="galleryPrev"><i class="fas fa-chevron-left"></i></button>
+    <button class="gallery-nav next" id="galleryNext"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<!-- ====== DETAIL CONTENT ====== -->
+<div class="container">
+    <div class="detail-content">
+
+        <!-- Left: Main Info -->
+        <div class="detail-main">
+            <h1>Grand Hyat Hotel</h1>
+
+            <div class="detail-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>F06,CHINA HOME, International City,4th floor, Dubai, United Arab Emirates</span>
+            </div>
+
+            <div class="detail-phone">
+                <i class="fas fa-phone"></i>
+                <span>1234567890</span>
+            </div>
+
+            <div class="detail-rating">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star empty"></i>
+                    <i class="fas fa-star empty"></i>
+                </div>
+                <span class="rating-badge">3.0/5 (1 Reviews)</span>
+            </div>
+
+            <div class="detail-actions">
+                <button><i class="far fa-heart"></i> Wishlist</button>
+                <button><i class="fas fa-share-alt"></i> Share</button>
+            </div>
+
+            <!-- Description -->
+            <div class="detail-description">
+                <h2>Description</h2>
+                <p>
+                    <strong><em>The Smart Holiday Homes</em></strong> provides accommodations in Dubai. The homestay
+                    features rooms with air conditioning, free private parking, and free Wifi. At the homestay, each
+                    unit is equipped with a balcony. There's also a fridge, kitchenware, and a kettle. At the homestay,
+                    every unit comes with a wardrobe and a private bathroom.
+                </p>
+                <p style="margin-top: 16px;">
+                    <strong>The Smart Holiday Homes has been welcoming Booking.com guests since Jul 29, 2023</strong>
+                </p>
+                <p style="margin-top: 12px; font-size: 0.85rem; color: #9ca3af;">
+                    Distance in property description is calculated using &copy; OpenStreetMap
+                </p>
+            </div>
+
+            <!-- Contact Row -->
+            <div class="detail-contact-row">
+                <span><i class="fas fa-phone"></i> 1234567890</span>
+                <span><i class="fas fa-envelope"></i> grandhyat@gmail.com</span>
+            </div>
+
+            <!-- Social Share -->
+            <div class="social-share">
+                <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#" class="social-btn twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#" class="social-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#" class="social-btn linkedin"><i class="fab fa-linkedin-in"></i> Linkedin</a>
+                <a href="#" class="social-btn youtube"><i class="fab fa-youtube"></i> Youtube</a>
+            </div>
+        </div>
+
+        <!-- Right: Booking Sidebar -->
+        <div class="booking-sidebar">
+            <!-- Booking Card -->
+            <div class="booking-card">
+                <div class="booking-card-title">
+                    <div class="icon-box">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <span>Booking</span>
+                </div>
+
+                <form class="booking-form" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Check-in Date</label>
+                        <input type="date" name="check_in" placeholder="mm/dd/yyyy">
+                    </div>
+                    <div class="form-group">
+                        <label>Check-out Date</label>
+                        <input type="date" name="check_out" placeholder="mm/dd/yyyy">
+                    </div>
+
+                    <div class="guests-section">
+                        <div class="guests-label">
+                            Guests <span class="info-badge">i</span>
+                        </div>
+                        <div class="guest-row">
+                            <span>Adults</span>
+                            <div class="guest-counter">
+                                <button type="button" class="counter-minus">−</button>
+                                <input type="number" name="adults" value="1" min="0" max="10" readonly>
+                                <button type="button" class="counter-plus">+</button>
+                            </div>
+                        </div>
+                        <div class="guest-row">
+                            <span>Childrens</span>
+                            <div class="guest-counter">
+                                <button type="button" class="counter-minus">−</button>
+                                <input type="number" name="children" value="1" min="0" max="10" readonly>
+                                <button type="button" class="counter-plus">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Room Type</label>
+                        <select name="room_type">
+                            <option value="">Select Room</option>
+                            <option value="standard">Standard Room</option>
+                            <option value="deluxe">Deluxe Room</option>
+                            <option value="suite">Suite</option>
+                            <option value="penthouse">Penthouse</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="booking-submit-btn">Check Availability</button>
+                </form>
+
+                <button class="wishlist-btn">
+                    <i class="far fa-heart"></i> Add to Wishlist
+                </button>
+            </div>
+
+            <!-- Contact Info Card -->
+            <div class="contact-info-card">
+                <h3>
+                    <div class="icon-box">
+                        <i class="fas fa-address-book"></i>
+                    </div>
+                    Contact Info
+                </h3>
+                <div class="contact-info-item">
+                    <i class="fas fa-phone"></i>
+                    <span>1234567890</span>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>grandhyat@gmail.com</span>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>F06,CHINA HOME, International City, Dubai</span>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-globe"></i>
+                    <span>www.grandhyathotel.com</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

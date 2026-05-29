@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - HMS{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+    <div class="container">
+        <h2 class="auth-title">Sign Up</h2>
+        <p class="auth-subtitle">Create your account to get started</p>
+
+        <div class="auth-container">
+            <!-- Form Side -->
+            <div class="auth-form-side">
+                <form class="auth-form" method="POST" action="{% url 'userauths:sign-up' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="auth-submit-btn">SIGN UP</button>
+                </form>
+                <div class="auth-links">
+                    Already have an account? <a href="{% url 'userauths:sign-in' %}">Sign In</a>
+                </div>
+            </div>
+
+            <!-- Illustration Side -->
+            <div class="auth-illustration">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" style="max-width:380px;width:100%">
+                    <!-- Background card -->
+                    <rect x="160" y="50" width="220" height="280" rx="18" fill="#f0f0f5" stroke="#e0e0e8"
+                        stroke-width="2" />
+                    <!-- User icon circle -->
+                    <circle cx="270" cy="120" r="35" fill="#7c3aed" opacity="0.15" />
+                    <circle cx="270" cy="110" r="14" fill="#7c3aed" />
+                    <path d="M248 140 Q248 125 270 125 Q292 125 292 140 Q292 148 270 148 Q248 148 248 140Z"
+                        fill="#7c3aed" />
+                    <!-- Form fields -->
+                    <rect x="200" y="165" width="140" height="14" rx="7" fill="#c5b8f0" />
+                    <rect x="200" y="190" width="140" height="14" rx="7" fill="#d0c8f4" />
+                    <rect x="200" y="215" width="140" height="14" rx="7" fill="#c5b8f0" />
+                    <rect x="200" y="240" width="140" height="14" rx="7" fill="#d0c8f4" />
+                    <!-- Sign up button -->
+                    <rect x="210" y="270" width="120" height="32" rx="16" fill="#7c3aed" />
+                    <text x="270" y="291" text-anchor="middle" fill="white" font-size="12"
+                        font-family="Inter,sans-serif" font-weight="600">Sign Up</text>
+                    <!-- Decorative elements -->
+                    <circle cx="140" cy="100" r="20" fill="#facc15" opacity="0.2" />
+                    <circle cx="400" cy="180" r="16" fill="#22c55e" opacity="0.2" />
+                    <circle cx="380" cy="80" r="12" fill="#3b82f6" opacity="0.2" />
+                    <!-- Stars/sparkles -->
+                    <text x="130" y="180" font-size="20" fill="#7c3aed" opacity="0.4">✦</text>
+                    <text x="395" y="130" font-size="16" fill="#facc15" opacity="0.5">✦</text>
+                    <text x="160" y="300" font-size="14" fill="#22c55e" opacity="0.4">✦</text>
+                    <!-- Ground -->
+                    <line x1="100" y1="350" x2="430" y2="350" stroke="#e2e8f0" stroke-width="2" />
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

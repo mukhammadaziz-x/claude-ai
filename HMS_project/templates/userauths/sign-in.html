@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign In - HMS{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+    <div class="container">
+        <h2 class="auth-title">Sign In</h2>
+        <p class="auth-subtitle">Hi there! Welcome Back</p>
+
+        <div class="auth-container">
+            <!-- Form Side -->
+            <div class="auth-form-side">
+                <form class="auth-form" method="POST" action="{% url 'userauths:sign-in' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="••••••••••" required>
+                    </div>
+                    <button type="submit" class="auth-submit-btn">SIGN IN</button>
+                </form>
+                <div class="auth-links">
+                    Don't have an account? <a href="{% url 'userauths:sign-up' %}">Sign Up</a>
+                </div>
+            </div>
+
+            <!-- Illustration Side -->
+            <div class="auth-illustration">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" style="max-width:380px;width:100%">
+                    <!-- Background elements -->
+                    <rect x="180" y="60" width="200" height="260" rx="16" fill="#f0f0f5" stroke="#e0e0e8"
+                        stroke-width="2" />
+                    <!-- Screen content -->
+                    <rect x="210" y="130" width="140" height="14" rx="7" fill="#c5b8f0" />
+                    <rect x="210" y="155" width="120" height="14" rx="7" fill="#d0c8f4" />
+                    <rect x="210" y="180" width="100" height="14" rx="7" fill="#c5b8f0" />
+                    <!-- Sign in button on screen -->
+                    <rect x="220" y="210" width="110" height="30" rx="15" fill="#7c3aed" />
+                    <text x="275" y="230" text-anchor="middle" fill="white" font-size="12"
+                        font-family="Inter,sans-serif" font-weight="600">Sign In</text>
+                    <!-- Check mark circle -->
+                    <circle cx="360" cy="100" r="30" fill="#7c3aed" opacity="0.15" />
+                    <circle cx="360" cy="100" r="22" fill="#7c3aed" />
+                    <polyline points="348,100 356,108 372,92" fill="none" stroke="white" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <!-- Street lamp -->
+                    <rect x="400" y="90" width="4" height="180" fill="#c0bcc8" />
+                    <ellipse cx="402" cy="88" rx="18" ry="8" fill="#d4d0dc" />
+                    <ellipse cx="402" cy="88" rx="6" ry="3" fill="#facc15" opacity="0.6" />
+                    <!-- Plant pot -->
+                    <rect x="130" y="300" width="30" height="25" rx="4" fill="#3b82f6" />
+                    <rect x="135" y="295" width="20" height="10" rx="2" fill="#2563eb" />
+                    <line x1="145" y1="295" x2="145" y2="250" stroke="#22c55e" stroke-width="3" />
+                    <ellipse cx="145" cy="248" rx="14" ry="10" fill="#22c55e" />
+                    <ellipse cx="135" cy="260" rx="10" ry="8" fill="#16a34a" />
+                    <ellipse cx="155" cy="265" rx="8" ry="7" fill="#22c55e" />
+                    <!-- Person on bench -->
+                    <!-- Bench -->
+                    <rect x="200" y="310" width="120" height="8" rx="3" fill="#94a3b8" />
+                    <rect x="210" y="318" width="6" height="30" fill="#94a3b8" />
+                    <rect x="304" y="318" width="6" height="30" fill="#94a3b8" />
+                    <rect x="200" y="290" width="5" height="28" fill="#94a3b8" />
+                    <rect x="315" y="290" width="5" height="28" fill="#94a3b8" />
+                    <!-- Person body -->
+                    <circle cx="260" cy="250" r="16" fill="#f4c3a0" />
+                    <!-- Hair -->
+                    <ellipse cx="260" cy="242" rx="18" ry="14" fill="#1e293b" />
+                    <ellipse cx="270" cy="248" rx="6" ry="10" fill="#1e293b" />
+                    <!-- Body -->
+                    <path d="M248 266 Q240 290 245 310 L275 310 Q280 290 272 266 Z" fill="#60a5fa" />
+                    <!-- Arm holding tablet -->
+                    <line x1="270" y1="275" x2="295" y2="268" stroke="#f4c3a0" stroke-width="5"
+                        stroke-linecap="round" />
+                    <!-- Tablet -->
+                    <rect x="288" y="258" width="22" height="16" rx="3" fill="#475569" />
+                    <rect x="290" y="260" width="18" height="12" rx="2" fill="#93c5fd" />
+                    <!-- Legs -->
+                    <line x1="252" y1="310" x2="245" y2="348" stroke="#f4c3a0" stroke-width="5"
+                        stroke-linecap="round" />
+                    <line x1="268" y1="310" x2="275" y2="348" stroke="#f4c3a0" stroke-width="5"
+                        stroke-linecap="round" />
+                    <!-- Shoes -->
+                    <ellipse cx="243" cy="350" rx="8" ry="4" fill="#7c3aed" />
+                    <ellipse cx="277" cy="350" rx="8" ry="4" fill="#7c3aed" />
+                    <!-- Ground line -->
+                    <line x1="100" y1="350" x2="430" y2="350" stroke="#e2e8f0" stroke-width="2" />
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

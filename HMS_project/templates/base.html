@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Book unique hotel experiences - Discover top rated hotels, shops and restaurants around the world">
+    <title>{% block title %}HMS - Hotel Management System{% endblock %}</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- ====== NAVBAR ====== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-left">
+            <a href="{% url 'hotel:index' %}" class="nav-logo">
+                <span>E</span>arning
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="{% url 'hotel:index' %}" class="{% block nav_home %}{% endblock %}">Home</a></li>
+                <li class="nav-dropdown">
+                    <span>Hotels <i class="fas fa-chevron-down arrow-down"></i></span>
+                    <div class="nav-dropdown-menu">
+                        <a href="{% url 'hotel:index' %}">All Hotels</a>
+                        <a href="#">Featured Hotels</a>
+                        <a href="#">Top Rated</a>
+                    </div>
+                </li>
+                <li class="nav-dropdown">
+                    <span>Account <i class="fas fa-chevron-down arrow-down"></i></span>
+                    <div class="nav-dropdown-menu">
+                        {% if request.user.is_authenticated %}
+                        <a href="#">My Profile</a>
+                        <a href="#">My Bookings</a>
+                        <a href="#">Settings</a>
+                        {% else %}
+                        <a href="{% url 'userauths:sign-in' %}">Sign In</a>
+                        <a href="{% url 'userauths:sign-up' %}">Sign Up</a>
+                        {% endif %}
+                    </div>
+                </li>
+                <li><a href="#">Blog</a></li>
+                <li class="nav-dropdown">
+                    <span>Pages <i class="fas fa-chevron-down arrow-down"></i></span>
+                    <div class="nav-dropdown-menu">
+                        <a href="#">About Us</a>
+                        <a href="#">Contact</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+            <a href="#" class="nav-btn nav-btn-primary">
+                <i class="fas fa-bed"></i> <span class="btn-text">0</span>
+            </a>
+            {% if request.user.is_authenticated %}
+            <a href="#" class="nav-btn nav-btn-dark">
+                <i class="fas fa-th-large"></i> <span class="btn-text">Dashboard</span>
+            </a>
+            <a href="{% url 'userauths:sign-out' %}" class="nav-btn nav-btn-primary">
+                <i class="fas fa-sign-out-alt"></i> <span class="btn-text">Sign Out</span>
+            </a>
+            {% else %}
+            <a href="{% url 'userauths:sign-in' %}" class="nav-btn nav-btn-dark">
+                <i class="fas fa-sign-in-alt"></i> <span class="btn-text">Sign In</span>
+            </a>
+            <a href="{% url 'userauths:sign-up' %}" class="nav-btn nav-btn-primary">
+                <i class="fas fa-user-plus"></i> <span class="btn-text">Sign Up</span>
+            </a>
+            {% endif %}
+
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ====== MESSAGES ====== -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <i
+                class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'warning' %}fa-exclamation-triangle{% elif message.tags == 'error' %}fa-times-circle{% else %}fa-info-circle{% endif %}"></i>
+            {{ message }}
+            <button class="close-msg">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ====== MAIN CONTENT ====== -->
+    {% block content %}{% endblock %}
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#">About Earning</a></li>
+                        <li><a href="#">How it works</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>My Account</h4>
+                    <ul>
+                        {% if request.user.is_authenticated %}
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">My Bookings</a></li>
+                        <li><a href="#">Wishlist</a></li>
+                        {% else %}
+                        <li><a href="{% url 'userauths:sign-in' %}">Sign In</a></li>
+                        <li><a href="{% url 'userauths:sign-up' %}">Sign Up</a></li>
+                        {% endif %}
+                        <li><a href="#">My Wallet</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Pages</h4>
+                    <ul>
+                        <li><a href="{% url 'hotel:index' %}">Home</a></li>
+                        <li><a href="#">Hotels</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Cancel Booking</a></li>
+                        <li><a href="#">Refund</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Earning. All Rights Reserved - Muhammadaziz</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Main JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>
